@@ -3,27 +3,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserView extends JFrame {
-    private JList<String> followingsList;
-    private JList<String> newsFeedList;
     private JTextField tweetInput;
     private JButton postButton;
-
-    private DefaultListModel<String> followingsListModel;
-    private DefaultListModel<String> newsFeedListModel;
+    private JLabel userCreationLabel;
+    private JLabel groupCreationLabel;
 
     public UserView() {
         setTitle("User View");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
 
-        followingsListModel = new DefaultListModel<>();
-        newsFeedListModel = new DefaultListModel<>();
-
-        followingsList = new JList<>(followingsListModel);
-        newsFeedList = new JList<>(newsFeedListModel);
-
         tweetInput = new JTextField();
         postButton = new JButton("Post Tweet");
+        userCreationLabel = new JLabel();
+        groupCreationLabel = new JLabel();
 
         postButton.addActionListener(new ActionListener() {
             @Override
@@ -40,12 +33,12 @@ public class UserView extends JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(followingsList)
-                                        .addComponent(newsFeedList)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(tweetInput, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(postButton)))
+                                                .addComponent(postButton))
+                                        .addComponent(userCreationLabel)
+                                        .addComponent(groupCreationLabel))
                                 .addContainerGap(200, Short.MAX_VALUE))
         );
 
@@ -53,29 +46,32 @@ public class UserView extends JFrame {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(followingsList, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(newsFeedList, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(tweetInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(postButton))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(userCreationLabel)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(groupCreationLabel)
                                 .addContainerGap(100, Short.MAX_VALUE))
         );
+
+        // Creating a User and displaying creationTime
+        User newUser = new User("exampleUserID");
+        long userCreationTime = newUser.getCreationTime();
+        userCreationLabel.setText("User Creation Time: " + userCreationTime); // Update label with creation time
+
+        // Creating a UserGroup and displaying creationTime
+        UserGroup newGroup = new UserGroup("exampleGroupID");
+        long groupCreationTime = newGroup.getCreationTime();
+        groupCreationLabel.setText("Group Creation Time: " + groupCreationTime); // Update label with creation time
+
+        add(userCreationLabel);
+        add(groupCreationLabel);
     }
 
     private void postTweet() {
-        String tweet = tweetInput.getText();
-        if (!tweet.isEmpty()) {
-            // Update news feed and notify followers
-            newsFeedListModel.addElement(tweet);
-            notifyFollowers(tweet);
-            tweetInput.setText(""); // Clear the input field
-        }
-    }
-
-    private void notifyFollowers(String message) {
-        // Notify followers logic (to be implemented)
+        // Logic to post a tweet
     }
 
     public static void main(String[] args) {
