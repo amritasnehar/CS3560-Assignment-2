@@ -1,30 +1,15 @@
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
-import java.util.List;
-
-// UserGroup class (Composite)
-public class UserGroup extends DefaultMutableTreeNode implements Subject {
-    private List<Observer> observers;
+public class UserGroup {
+    private String groupId;
+    private long creationTime;
 
     public UserGroup(String groupId) {
-        super(groupId);
-        this.observers = new ArrayList<>();
+        this.groupId = groupId;
+        this.creationTime = System.currentTimeMillis();
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    public long getCreationTime() {
+        return creationTime;
     }
 
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(String message) {
-        for (Observer observer : observers) {
-            observer.update(message);
-        }
-    }
+    // Other methods
 }
