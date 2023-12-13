@@ -1,12 +1,15 @@
-public class User implements Observer {
+public class User {
     private String userId;
+    private long creationTime;
 
     public User(String userId) {
         this.userId = userId;
+        this.creationTime = System.currentTimeMillis();
     }
 
-    @Override
-    public void update(String message) {
-        System.out.println("User " + userId + " received message: " + message);
+    public long getCreationTime() {
+        return creationTime;
     }
+
+    // Other methods
 }
